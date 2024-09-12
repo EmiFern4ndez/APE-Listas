@@ -1,4 +1,4 @@
-#LISTA DE EVENTOS HISTÓRICOS
+<h1 align="center">LISTA DE EVENTOS HISTÓRICOS</h1>
 
 ## Resumen
 
@@ -16,7 +16,7 @@ Se solicita un programa que permita gestionar una lista de eventos históricos. 
 
 
 
-###Funciones Implementadas
+### Funciones Implementadas
 
 `leerEvento(Evento *e)` : Permite la entrada de datos para un nuevo evento.
 
@@ -33,7 +33,7 @@ Se solicita un programa que permita gestionar una lista de eventos históricos. 
 `retornarLista(Nodo l1, Nodo *l2, int anio)` : Filtra recursivamente todos los eventos ocurridos hasta el año dado y los almacena en una nueva lista.
 
 
-###Estructuras utilizadas
+### Estructuras utilizadas
 
 ```c
 /* Registro */
@@ -49,7 +49,13 @@ typedef struct nodo{
     struct nodo *sig;
 }*Nodo;
 ```
-###Integrantes:
+<h4 align="center">TECNOLOGIAS Y HERRAMIENTAS</h4>
+<div align="center">
+	<img src="https://s3.amazonaws.com/s3.timetoast.com/public/uploads/photo/20812205/image/medium-0b8be812aaf27c065e64b34b76a529a0.png" alt="Descripción de la imagen" width="130" height="90" style="margin:auto;">
+	<img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/visual-studio-code-icon.png" alt="Descripción de la imagen" width="100" height="100" style="display:flex; margin:auto;">
+</div>
+
+### Integrantes:
 - Fernandez Emiliano
 - Morales Lautaro
 - Henriquez Gerardo Alberto
