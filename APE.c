@@ -18,16 +18,19 @@ typedef struct nodo{
 void leerEvento(Evento *e){
     printf("INGRESE EL ANIO:\n");
     scanf("%d", &e->anio);
-    printf("INGRESE EL TITULO:\n");
-    scanf("%s", &e->titulo);
-    printf("INGRESE UNA BREVE DESCRIPCION:\n");
-    scanf("%s", &e->descripcion);
+    if (e->anio != 1){
+        printf("INGRESE EL TITULO:\n");
+        scanf(" %s", e->titulo);
+        printf("INGRESE UNA BREVE DESCRIPCION:\n");
+        scanf(" %s", e->descripcion);
+    }  
 }
 
 Nodo crearNodo(Evento e){
     Nodo nue = (Nodo)malloc(sizeof(struct nodo));
     nue->dato = e;
     nue->sig = NULL;
+    return nue;
 }
 
 void insertarOrdenado(Nodo *l, Evento e){
@@ -52,16 +55,18 @@ void crearLista(Nodo *l){
         insertarOrdenado(l, e);
         leerEvento(&e);
     }
-    printf("| ------------------------------------- |\n");
-    printf("| Se creo con exito la lista de eventos |\n");
-    printf("| ------------------------------------- |\n");
+    printf("----------------------------------------- \n");
+    printf("| Se creo con exito la lista de eventos | \n");
+    printf("----------------------------------------- \n \n");
 }
 
 void mostrarLista(Nodo lista){
     while (lista != NULL){
-        printf("Anio: %d\n", lista->dato.anio);
-        printf("Titulo: %s\n", lista->dato.titulo);
-        printf("Descripcion: %s\n", lista->dato.descripcion);
+        printf("------------\n");
+        printf(" Anio: %d\n", lista->dato.anio);
+        printf(" Titulo: %s\n", lista->dato.titulo);
+        printf(" Descripcion: %s\n", lista->dato.descripcion);
+        printf("------------\n");
         lista = lista->sig;
     }
 }
@@ -102,41 +107,61 @@ void retornarLista(Nodo l1, Nodo *l2, int anio){
     }
 }
 
+void menu(Nodo *lista, Nodo *listaAnio){
+    int opcion;
+    int anio;
+    int ok = 0;
+    do{
+        printf("  --- MENU ---  \n1.BUSCAR EVENTO\n2.ELIMINAR EVENTO\n3.FILTRAR POR ANIO\n4.SALIR\n \n");
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+            /* FUNCION PARA BUSCAR UN EVENTO DENTRO DE LA LISTA */
+            printf("\nIngrese el anio del evento que quieres buscar:\n");
+            scanf("%d", &anio);
+            buscar(*lista, &ok, anio);
+            if (ok){
+                printf("\nEl evento se encuentra en la lista\n \n");
+            }else
+                printf("\nNo se encontro el evento dentro de la lista\n \n");
+            break;
+
+        case 2:
+            /* FUNCION PARA ELIMINAR UN EVENTO DE LA LISTA */
+            printf("\nIngrese el anio del evento que quieres eliminar:\n");
+            scanf("%d", &anio);
+            eliminar(lista, anio, &ok);
+            if (ok){
+            printf("\nSe elimino el evento con el anio %d\n \n", anio);
+            }else
+                printf("\nNo se pudo eliminar el evento con el anio %d\n \n", anio);
+            break;
+
+        case 3:
+            /* FUNCION RECURSIVA PARA RETORNAR LA LISTA DE EVENTOS A PARTIR DE UN ANIO */
+            printf("\nIngrese el anio por el que quieres filtrar:\n");
+            scanf("%d", &anio);
+            retornarLista(*lista, listaAnio, anio);
+            /* FUNCION PARA IMPRIMIR LISTAS */
+            mostrarLista(*listaAnio);
+            break;
+        
+        default:
+            printf("\nOpcion no disponible\n");
+            break;
+        }
+    } while (opcion != 4);
+}
 
 int main(){
     Nodo lista = NULL;
-    int ok = 0;
-    int anio;
+    Nodo listaAnio = NULL;
 
     /* CREA LA LISTA DE EVENTOS */
     crearLista(&lista);
-    printf("Ingrese el anio del evento que quieres buscar:\n");
 
-    /* FUNCION PARA BUSCAR UN EVENTO DENTRO DE LA LISTA */
-    scanf("%d", &anio);
-    buscar(lista, &ok, anio);
-    if (ok){
-        printf("El evento se encuentra en la lista\n");
-    }else
-        printf("No se encontro el evento dentro de la lista\n");
-
-    /* FUNCION PARA ELIMINAR UN EVENTO DE LA LISTA */
-    printf("Ingrese el anio del evento que quieres eliminar:\n");
-    scanf("%d", &anio);
-    eliminar(&lista, anio, &ok);
-    if (ok){
-        printf("Se elimino el evento con el anio %d\n", anio);
-    }else
-        printf("No se pudo eliminar el evento con el anio %d\n", anio);
-    
-    /* FUNCION RECURSIVA PARA RETORNAR LA LISTA DE EVENTOS A PARTIR DE UN ANIO */
-    Nodo listaAnio = NULL;
-    printf("Lista filtrada hasta el año %d:\n", anio);
-    scanf("%d", &anio);
-    retornarLista(lista, &listaAnio, anio);
-
-    /* FUNCION PARA IMPRIMIR LISTAS */
-    mostrarLista(listaAnio);
-
+    /* MENU DE OPCIONES */
+    menu(&lista, &listaAnio);
     return 0;
 }
